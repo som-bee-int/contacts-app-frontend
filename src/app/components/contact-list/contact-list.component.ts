@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 import { ContactService } from '../../services/contact.service';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,9 @@ export class ContactListComponent {
   isModalOpen = signal(false);
   isDeleteModalOpen = signal(false);
   contactToDeleteId = signal<number | null>(null);
+  searchTerm = signal('');
+
+ 
 
   openCreateModal(): void {
     this.selectedContact.set({ firstName: '', lastName: '', email: '', isActive: true });
@@ -62,6 +65,20 @@ export class ContactListComponent {
     if (this.contactToDeleteId()) {
       this.contactService.deleteContact(this.contactToDeleteId()!);
       this.closeDeleteModal();
+    }
+  }
+
+  updateSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm.set(input.value);
+  }
+
+  performSearch(): void {
+    const term = this.searchTerm();
+    if (term) {
+      this.contactService.searchContacts(term);
+    } else {
+      this.contactService.loadContacts();
     }
   }
 

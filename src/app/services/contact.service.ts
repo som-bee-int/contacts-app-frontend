@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
 import { Contact } from '../models/contact.model';
 import { ConfigService } from './config.service';
@@ -17,13 +17,24 @@ export class ContactService {
     this.loadContacts();
   }
 
-  private loadContacts(): void {
+   loadContacts(): void {
     this.http.get<Contact[]>(this.apiUrl).pipe(
       catchError(error => {
         console.error('Error loading contacts', error);
         return [];
       })
     ).subscribe(contacts => this.contactsSubject.next(contacts));
+  }
+
+  searchContacts(term: string): void {
+    const params = new HttpParams().set('search', term);
+    this.http.get<Contact[]>(this.apiUrl, { params }).pipe(
+      tap(contacts => this.contactsSubject.next(contacts)),
+      catchError(error => {
+        console.error('Error searching contacts', error);
+        return [];
+      })
+    ).subscribe();
   }
 
   createContact(contact: Contact): void {
