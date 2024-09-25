@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a robust, user-friendly Angular-based frontend for a Contacts Management System. It offers a comprehensive interface for managing contact information, including features for creating, reading, updating, and deleting contacts, as well as searching through the contact list.
+Hey there! This is a robust, user-friendly Angular-based frontend for our Contacts Management System. It offers a comprehensive interface for managing contact information, including features for creating, reading, updating, and deleting contacts, as well as searching through the contact list.
 
 ## Repository
 
@@ -10,7 +10,7 @@ This project is a robust, user-friendly Angular-based frontend for a Contacts Ma
 
 ## Prerequisites
 
-Before setting up the project, ensure you have the following installed:
+Before diving in, make sure you've got these installed:
 - Node.js (preferably the latest LTS version)
 - npm (usually comes with Node.js)
 - Angular CLI (install globally using `npm install -g @angular/cli`)
@@ -21,7 +21,7 @@ Before setting up the project, ensure you have the following installed:
    ```
    git clone https://github.com/som-bee-int/contacts-app-frontend.git
    ```
-   This command creates a local copy of the project on your machine.
+   This will create a local copy of the project on your machine.
 
 2. Navigate to the project directory:
    ```
@@ -33,6 +33,31 @@ Before setting up the project, ensure you have the following installed:
    npm install
    ```
    This command reads the `package.json` file and installs all necessary dependencies for the project.
+
+## Configuration
+
+We've set up environment-specific configurations to make it easier to manage different settings between development and production. Here's how it works:
+
+1. Navigate to the `src/environments` directory.
+2. You'll find two files: `environment.ts` and `environment.prod.ts`.
+3. The `environment.ts` file is used for development. It should look something like this:
+
+   ```typescript
+   export const environment = {
+     production: false,
+     apiUrl: 'https://localhost:7162/api'
+   };
+   ```
+
+4. Update the `apiUrl` to match the endpoint where your .NET Core backend is running. For example, if your backend is running on a different port, you might change it to:
+
+   ```typescript
+   apiUrl: 'https://localhost:7206/api'
+   ```
+
+5. The `environment.prod.ts` file is used for production builds. Make sure to set the correct production API URL in this file when you're ready to deploy.
+
+By using these environment files, we can easily switch between development and production settings without changing our code.
 
 ## Running the Application
 
@@ -51,7 +76,8 @@ To create a production build, run:
 ```
 ng build --configuration production
 ```
-This command compiles the application with production settings and outputs the build artifacts to the `dist/` directory. These files can be deployed to a web server for production use.
+This command compiles the application with production settings (using `environment.prod.ts`) and outputs the build artifacts to the `dist/` directory. These files can be deployed to a web server for production use.
+
 
 ## Application Structure and Design Decisions
 
@@ -132,3 +158,5 @@ This command compiles the application with production settings and outputs the b
 ## Further Help
 
 For more help on the Angular CLI use `ng help` or check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+Happy coding! If you run into any issues or have questions, feel free to reach out.
